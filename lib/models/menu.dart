@@ -10,7 +10,7 @@ class Menu {
   Menu({this.id, this.name, this.restaurantId, this.menuData, this.createdOn});
 
   factory Menu.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+    if (json == null || json["message"] != null) return null;
     return Menu(
       id: json['Id'],
       name: json['Name'],

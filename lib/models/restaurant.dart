@@ -8,7 +8,7 @@ class Restaurant {
   Restaurant({this.id, this.name, this.code, this.emailAddress, this.createdOn});
 
   factory Restaurant.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
+    if (json == null || json["message"] != null) return null;
     return Restaurant(
       id: json['Id'],
       name: json['Name'],

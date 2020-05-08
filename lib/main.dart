@@ -17,8 +17,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: const Text('Clean Green Menu'),
-            backgroundColor: PrimaryColor,
+            title: const Text('Clean Menu'),
+            backgroundColor: AppBarColor,
           ),
           body: HomeScreen()),
     );

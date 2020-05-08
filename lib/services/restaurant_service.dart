@@ -12,8 +12,8 @@ class RestaurantService {
   }
 
   Future<Menu> getRestaurantMenuById(String id) async {
-    var result = await http.get(API_BASE_URL + "/restaurant/" + id + "/menu");
-    var menu = Menu.fromJson(jsonDecode(result.body));
-    return menu;
+      var result = await http.get(API_BASE_URL + "/restaurant/" + id + "/menu");
+      var menu = Menu.fromJson(jsonDecode(result.body));
+      return menu;
   }
 }

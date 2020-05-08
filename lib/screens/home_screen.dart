@@ -2,6 +2,7 @@ import 'package:cleangreenmenu/screens/restaurant_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qrcode/qrcode.dart';
+import '../theme.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool capturedCode = false;
-  bool isTestMode = false;
+  bool isTestMode = true;
   var testModeButton = Container();
   Animation<Alignment> _animation;
   AnimationController _animationController;
@@ -75,8 +76,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
 
     return Scaffold(
-        body: Container(
-            /*decoration: BoxDecoration(
+        body: DefaultTextStyle(
+            style: TextStyle(inherit: true, color: TextColor),
+            child: Container(
+                /*decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("images/home_background.jpg"),
                 fit: BoxFit.cover,
@@ -84,92 +87,92 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     Colors.black.withOpacity(.3), BlendMode.dstATop),
               ),
             ),*/
-            child: Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Container(
-          width: 250,
-          height: 250,
-          child: QRCaptureView(
-            controller: _captureController,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 56),
-          child: AspectRatio(
-            aspectRatio: 264 / 258.0,
-            child: Stack(
-              alignment: _animation.value,
+                child: Stack(
+              alignment: Alignment.center,
               children: <Widget>[
-                Image.asset('images/sao@3x.png'),
-                Image.asset('images/tiao@3x.png')
+                Container(
+                  width: 250,
+                  height: 250,
+                  child: QRCaptureView(
+                    controller: _captureController,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 56),
+                  child: AspectRatio(
+                    aspectRatio: 264 / 258.0,
+                    child: Stack(
+                      alignment: _animation.value,
+                      children: <Widget>[
+                        Image.asset('images/sao@3x.png'),
+                        Image.asset('images/tiao@3x.png')
+                      ],
+                    ),
+                  ),
+                ),
+                Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: new EdgeInsets.only(bottom: 400.0),
+                      width: 290.0,
+                      height: 120.0,
+                      child: Container(
+                          margin: new EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 10.0),
+                          child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Column(children: [
+                                Text(
+                                  'WELCOME TO THE FUTURE OF MENUS',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 28.0,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ]))),
+                      //child: _buildToolBar(),
+                    )),
+                Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                        margin: new EdgeInsets.only(top: 520.0),
+                        child: Column(children: [
+                          Container(
+                              width: 400,
+                              child: Text(
+                                'Scan restaurant code in box above',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 20, fontStyle: FontStyle.italic),
+                              )),
+                          //child: _buildToolBar(),
+                          Container(
+                              alignment: Alignment.center,
+                              width: 290,
+                              child: Row(children: [
+                                Text(
+                                  '(it looks something like this:',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      image: new DecorationImage(
+                                        image: AssetImage("images/qrcode.png"),
+                                        fit: BoxFit.fitHeight,
+                                      ),
+                                    )),
+                                Text(
+                                  ')',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ])),
+                          //child: _buildToolBar(),
+                        ]))),
+                testModeButton
               ],
-            ),
-          ),
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Container(
-              margin: new EdgeInsets.only(bottom: 400.0),
-              width: 290.0,
-              height: 120.0,
-              child: Container(
-                  margin: new EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 10.0),
-                  child: Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Column(children: [
-                        Text(
-                          'WELCOME TO THE FUTURE OF MENUS',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 28.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ]))),
-              //child: _buildToolBar(),
-            )),
-        Align(
-            alignment: Alignment.center,
-            child: Container(
-                margin: new EdgeInsets.only(top: 520.0),
-                child: Column(children: [
-                  Container(
-                      width: 400,
-                      child: Text(
-                        'Scan restaurant code in box above',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20, fontStyle: FontStyle.italic),
-                      )),
-                  //child: _buildToolBar(),
-                  Container(
-                      alignment: Alignment.center,
-                      width: 290,
-                      child: Row(children: [
-                        Text(
-                          '(it looks something like this:',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              image: new DecorationImage(
-                                image: AssetImage("images/qrcode.png"),
-                                fit: BoxFit.fitHeight,
-                              ),
-                            )),
-                        Text(
-                          ')',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ])),
-                  //child: _buildToolBar(),
-                ]))),
-        testModeButton
-      ],
-    )));
+            ))));
   }
 }
