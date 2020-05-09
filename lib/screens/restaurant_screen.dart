@@ -19,7 +19,7 @@ class RestaurantScreen extends StatefulWidget {
 class _RestaurantScreenState extends State<RestaurantScreen> {
   String restaurantId;
   String restaurantName;
-  var appBarTitleText = new Text("");
+  Widget appBarTitleText = Text("Loading...");
   final scrollController = ItemScrollController();
     final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
   var _futureMenu;
@@ -36,7 +36,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
         if (val != null && val.name != null && val.name != "")
           appBarTitleText = Text(val.name);
         else {
-          appBarTitleText = Text("Clean Menu");
+          appBarTitleText = Text("Not Found...");
         }
       });
     });

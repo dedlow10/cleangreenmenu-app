@@ -16,4 +16,14 @@ class RestaurantService {
       var menu = Menu.fromJson(jsonDecode(result.body));
       return menu;
   }
+
+    Future<List<Restaurant>> findRestaurantByName(String name) async {
+      var result = await http.get(API_BASE_URL + "/restaurant/search?name=" + name);
+      var restaurants = new List<Restaurant>();
+      var results = jsonDecode(result.body);
+      for (var result in  results) {
+        restaurants.add(Restaurant.fromJson(result));
+      }
+      return restaurants;
+  }
 }

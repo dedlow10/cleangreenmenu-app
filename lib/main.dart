@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: const Text('Clean Menu'),
+            title: Image.asset('images/logo.png', alignment: Alignment.centerLeft, height: 70, fit: BoxFit.cover),
             backgroundColor: AppBarColor,
           ),
           body: HomeScreen()),
