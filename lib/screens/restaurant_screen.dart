@@ -1,3 +1,4 @@
+import 'package:cleangreenmenu/widgets/menu_templates/classic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../services/restaurant_service.dart';
@@ -47,92 +48,43 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   }
 
   buildMenu(snapshot) {
-    var list = ScrollablePositionedList.builder(
-        itemScrollController: scrollController,
-        itemCount: snapshot.data.menuData["MenuSections"].length,
-        itemPositionsListener: itemPositionsListener,
-        itemBuilder: (BuildContext context, int index) {
-          var menuSection = snapshot.data.menuData["MenuSections"][index];
-
-          var menuItems = new List<Container>();
-          for (var item in menuSection["MenuItems"]) {
-            var nameContainer = Container(
-                child: Text(
-                  item["Name"],
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-                margin: new EdgeInsets.only(bottom: 5.0));
-            var descriptionContainer = Container(
-                child: Text(item["Description"],
-                    style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
-                    textAlign: TextAlign.center),
-                margin: new EdgeInsets.only(bottom: 5.0));
-            var priceContainer = Container(
-                child: Text("\$" + item["Price"].toString(),
-                    style: TextStyle(fontSize: 15)),
-                margin: new EdgeInsets.only(bottom: 15.0));
-            menuItems.add(Container(
-                child: Column(children: <Widget>[
-                  nameContainer,
-                  item["Description"] != null && item["Description"] != ""
-                      ? descriptionContainer
-                      : Container(),
-                  item["Price"] != null ? priceContainer : Container()
-                ]),
-                width: 250));
-          }
-
-          return DefaultTextStyle(
-              style: TextStyle(inherit: true, color: TextColor),
-              child: Container(
-                  margin: new EdgeInsets.only(top: 10, left: 10, right: 10),
-                  child: Column(children: [
-                    Text(menuSection["SectionName"],
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28,
-                            color: TextColor)),
-                    Container(
-                      child: Column(children: menuItems),
-                      margin: new EdgeInsets.only(bottom: 40.0, top: 5),
-                    ),
-                  ])));
-        });
-
-    return SliverFillRemaining(child: list);
-  }
-
-  _itemSelected(index) {
-    print(index);
-    scrollController.jumpTo(index: index);
+    return SliverFillRemaining(
+        child: ClassicMenu(
+            menu: snapshot.data,
+            scrollController: scrollController,
+            itemPositionsListener: itemPositionsListener));
   }
 
   buildNavigation(snapshot) {
-    return Container(
-        height: 40,
-        child: ListView.builder(
-            itemCount: snapshot.data.menuData["MenuSections"].length,
-            itemBuilder: (BuildContext context, int index) {
-              var menuSection = snapshot.data.menuData["MenuSections"][index];
-              return Container(
-                  margin: const EdgeInsets.only(right: 10.0),
-                  child: RaisedButton(
-                      onPressed: () {
-                        _itemSelected(index);
-                      },
-                      color: ButtonColor,
-                      child: Container(
-                        child: Center(
-                            child: Text(menuSection["SectionName"],
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.white))),
-                      )));
-            },
-            // This next line does the trick.
-            scrollDirection: Axis.horizontal));
-    //children: list));
+    return SliverAppBar(
+        title: Container(
+            height: 40,
+            child: ListView.builder(
+                itemCount: snapshot.data.menuData["MenuSections"].length,
+                itemBuilder: (BuildContext context, int index) {
+                  var menuSection =
+                      snapshot.data.menuData["MenuSections"][index];
+                  return Container(
+                      margin: const EdgeInsets.only(right: 10.0),
+                      child: RaisedButton(
+                          onPressed: () {
+                            scrollController.jumpTo(index: index);
+                          },
+                          color: ButtonColor,
+                          child: Container(
+                            child: Center(
+                                child: Text(menuSection["SectionName"],
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.white))),
+                          )));
+                },
+                scrollDirection: Axis.horizontal)),
+        pinned: true,
+        backgroundColor: ToolbarColor,
+        bottom: PreferredSize(
+            child: Container(color: DividerColor, height: 2.0),
+            preferredSize: Size.fromHeight(2.0)),
+        automaticallyImplyLeading: false);
   }
 
   @override
@@ -152,17 +104,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                             style: TextStyle(fontSize: 30))));
               }
               if (snapshot.data != null) {
-                return CustomScrollView(slivers: [
-                  SliverAppBar(
-                      title: buildNavigation(snapshot),
-                      pinned: true,
-                      backgroundColor: ToolbarColor,
-                      bottom: PreferredSize(
-                          child: Container(color: DividerColor, height: 2.0),
-                          preferredSize: Size.fromHeight(2.0)),
-                      automaticallyImplyLeading: false),
-                  buildMenu(snapshot)
-                ]);
+                return CustomScrollView(slivers: [buildNavigation(snapshot), buildMenu(snapshot)]);
               } else {
                 return Center(
                     child: Container(
