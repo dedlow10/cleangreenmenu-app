@@ -11,6 +11,6 @@ const DividerColor = const Color(0xffBDBDBD);
 
 //App Styles
 const AppBarColor = DarkPrimaryColor;
-const ToolbarColor = DarkPrimaryColor;
-const ButtonColor = AccentColor;
+const ToolbarColor = Colors.white;
+const ButtonColor = DarkPrimaryColor;
 const TextColor = PrimaryTextColor;

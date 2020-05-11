@@ -21,7 +21,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   String restaurantName;
   Widget appBarTitleText = Text("Loading...");
   final scrollController = ItemScrollController();
-    final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
   var _futureMenu;
   _RestaurantScreenState(restaurantId) {
     this.restaurantId = restaurantId;
@@ -41,7 +42,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
       });
     });
 
-    if (_futureMenu == null) _futureMenu = restaurantService.getRestaurantMenuById(this.restaurantId);
+    if (_futureMenu == null)
+      _futureMenu = restaurantService.getRestaurantMenuById(this.restaurantId);
   }
 
   buildMenu(snapshot) {
@@ -84,17 +86,18 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
           return DefaultTextStyle(
               style: TextStyle(inherit: true, color: TextColor),
               child: Container(
-                  margin: new EdgeInsets.only(top: 10),
+                  margin: new EdgeInsets.only(top: 10, left: 10, right: 10),
                   child: Column(children: [
                     Text(menuSection["SectionName"],
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                            color: PrimaryColor)),
+                            fontSize: 28,
+                            color: TextColor)),
                     Container(
                       child: Column(children: menuItems),
-                      margin: new EdgeInsets.only(bottom: 20.0, top: 5),
-                    )
+                      margin: new EdgeInsets.only(bottom: 40.0, top: 5),
+                    ),
                   ])));
         });
 
@@ -102,12 +105,13 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   }
 
   _itemSelected(index) {
+    print(index);
     scrollController.jumpTo(index: index);
   }
 
   buildNavigation(snapshot) {
     return Container(
-        height: 35,
+        height: 40,
         child: ListView.builder(
             itemCount: snapshot.data.menuData["MenuSections"].length,
             itemBuilder: (BuildContext context, int index) {
@@ -115,16 +119,16 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               return Container(
                   margin: const EdgeInsets.only(right: 10.0),
                   child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _itemSelected(index);
+                      },
                       color: ButtonColor,
-                      child: GestureDetector(
-                          onTap: () => _itemSelected(index),
-                          child: Container(
-                            child: Center(
-                                child: Text(menuSection["SectionName"],
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.white))),
-                          ))));
+                      child: Container(
+                        child: Center(
+                            child: Text(menuSection["SectionName"],
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.white))),
+                      )));
             },
             // This next line does the trick.
             scrollDirection: Axis.horizontal));
@@ -134,12 +138,18 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: appBarTitleText, backgroundColor: AppBarColor),
+        appBar: AppBar(
+          title: appBarTitleText,
+          backgroundColor: AppBarColor,
+        ),
         body: FutureBuilder<Menu>(
             future: _futureMenu,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: Container(child: Text("Loading...", style: TextStyle(fontSize: 30))));
+                return Center(
+                    child: Container(
+                        child: Text("Loading...",
+                            style: TextStyle(fontSize: 30))));
               }
               if (snapshot.data != null) {
                 return CustomScrollView(slivers: [
@@ -147,6 +157,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                       title: buildNavigation(snapshot),
                       pinned: true,
                       backgroundColor: ToolbarColor,
+                      bottom: PreferredSize(
+                          child: Container(color: DividerColor, height: 2.0),
+                          preferredSize: Size.fromHeight(2.0)),
                       automaticallyImplyLeading: false),
                   buildMenu(snapshot)
                 ]);
