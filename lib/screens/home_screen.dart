@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       Container(
           alignment: Alignment.center,
           width: 290,
-          child: Row(children: [
+          child: Wrap(children: [
             Text(
               '(it looks something like this:',
               style: TextStyle(fontSize: 20),
