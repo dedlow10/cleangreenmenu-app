@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Animation<Alignment> _animation;
   AnimationController _animationController;
   QRCaptureController _captureController = QRCaptureController();
+  bool isCameraEnabled = true;
 
   @override
   void initState() {
@@ -49,9 +50,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       Container(
         width: 250,
         height: 250,
-        child: QRCaptureView(
+        child: isCameraEnabled ? QRCaptureView(
           controller: _captureController,
-        ),
+        ) : Center(child: Text("Camera Disabled")),
       ),
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 56),
@@ -93,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: Text(
             'Scan restaurant code in box above',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+            style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
           )),
       //child: _buildToolBar(),
       Container(
@@ -102,11 +103,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: Row(children: [
             Text(
               '(it looks something like this:',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18),
             ),
             Container(
-                width: 30,
-                height: 30,
+                width: 28,
+                height: 28,
                 decoration: BoxDecoration(
                   image: new DecorationImage(
                     image: AssetImage("images/qrcode.png"),
@@ -115,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 )),
             Text(
               ')',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18),
             ),
           ])),
       //child: _buildToolBar(),
