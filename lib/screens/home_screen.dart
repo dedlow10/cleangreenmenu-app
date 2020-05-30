@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       Container(
           alignment: Alignment.center,
           width: 290,
-          child: Row(children: [
+          child: Wrap(children: [
             Text(
               '(it looks something like this:',
               style: TextStyle(fontSize: 18),
@@ -155,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     child: Container(
                         margin: new EdgeInsets.only(top: 20.0),
                         child: textDisclaimer())),
-                Container(
+                Expanded(child: Container(
                     alignment: Alignment.bottomCenter,
                     margin: new EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 30.0),
@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Text("Find a restaurant",
                               style: TextStyle(
                                   color: SecondaryTextColor, fontSize: 20))
-                        ])))
+                        ]))))
               ],
             ))));
   }

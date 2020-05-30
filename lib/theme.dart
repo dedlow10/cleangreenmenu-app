@@ -10,7 +10,7 @@ const SecondaryTextColor = const Color(0xff757575);
 const DividerColor = const Color(0xffBDBDBD);
 
 //App Styles
-const AppBarColor = DarkPrimaryColor;
-const ToolbarColor = DarkPrimaryColor;
-const ButtonColor = AccentColor;
+const AppBarColor = PrimaryColor;
+const ToolbarColor = Colors.white;
+const ButtonColor = PrimaryColor;
 const TextColor = PrimaryTextColor;
