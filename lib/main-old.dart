@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Clean Green Menu',
+      title: 'Clean Menu',
       home: RandomWords(),
     );
   }

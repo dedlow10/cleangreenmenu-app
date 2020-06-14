@@ -7,13 +7,13 @@ class RestaurantService {
   static const API_BASE_URL = "https://u9hmfgy0tc.execute-api.us-east-1.amazonaws.com/development";
    Future<Restaurant> getRestaurantById(String id) async {
     var result = await http.get(API_BASE_URL + "/restaurant/" + id);
-    var restaurant = Restaurant.fromJson(jsonDecode(result.body));
+    var restaurant = Restaurant.fromJson(jsonDecode(Utf8Decoder().convert(result.bodyBytes)));
     return restaurant;
   }
 
   Future<Menu> getRestaurantMenuById(String id) async {
       var result = await http.get(API_BASE_URL + "/restaurant/" + id + "/menu");
-      var menu = Menu.fromJson(jsonDecode(result.body));
+      var menu = Menu.fromJson(jsonDecode(Utf8Decoder().convert(result.bodyBytes)));
       return menu;
   }
 

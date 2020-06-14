@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const DarkPrimaryColor = const Color(0xff303F9F);  //Color.fromRGBO(0, 105, 92, 1.0);
 const LightPrimaryColor = const Color(0xffBBDEFB);
-const PrimaryColor = const Color(0xff2196F3);
+const PrimaryColor = const Color(0xff4A64A5);
 const TextIconColor = const Color(0xffffffff);
 const AccentColor = const Color(0xff448AFF);
 const PrimaryTextColor = const Color(0xff212121);

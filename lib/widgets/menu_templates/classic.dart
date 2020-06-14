@@ -1,3 +1,4 @@
+import 'dart:convert' show utf8;
 import 'dart:ui';
 
 import 'package:cleangreenmenu/models/menu.dart';
@@ -32,22 +33,29 @@ class ClassicMenu extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 margin: new EdgeInsets.only(bottom: 5.0));
-            var descriptionContainer = Container(
-                child: Text(item["Description"],
-                    style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
-                    textAlign: TextAlign.center),
-                margin: new EdgeInsets.only(bottom: 5.0));
-            var priceContainer = Container(
+
+            var descriptionContainer = Container();
+            var priceContainer = Container();
+            if (item["Description"] != null) {
+              descriptionContainer = Container(
+                  child: Text(item["Description"],
+                      style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
+                      textAlign: TextAlign.center),
+                  margin: new EdgeInsets.only(bottom: 5.0));
+            }
+
+            if (item["Price"] != null) {
+              priceContainer = Container(
                 child: Text("\$" + item["Price"].toString(),
                     style: TextStyle(fontSize: 15)),
                 margin: new EdgeInsets.only(bottom: 15.0));
+            }
+
             menuItems.add(Container(
                 child: Column(children: <Widget>[
                   nameContainer,
-                  item["Description"] != null && item["Description"] != ""
-                      ? descriptionContainer
-                      : Container(),
-                  item["Price"] != null ? priceContainer : Container()
+                  descriptionContainer,
+                  priceContainer
                 ]),
                 width: 250));
           }

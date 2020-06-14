@@ -32,19 +32,19 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   @override
   void initState() {
     super.initState();
-    var restaurantService = new RestaurantService();
-    restaurantService.getRestaurantById(this.restaurantId).then((val) {
-      setState(() {
-        if (val != null && val.name != null && val.name != "")
-          appBarTitleText = Text(val.name);
-        else {
-          appBarTitleText = Text("Not Found...");
-        }
+    if (_futureMenu == null) {
+      var restaurantService = new RestaurantService();
+      restaurantService.getRestaurantById(this.restaurantId).then((val) {
+        setState(() {
+          if (val != null && val.name != null && val.name != "")
+            appBarTitleText = Text(val.name);
+          else {
+            appBarTitleText = Text("Not Found...");
+          }
+        });
       });
-    });
-
-    if (_futureMenu == null)
       _futureMenu = restaurantService.getRestaurantMenuById(this.restaurantId);
+    }
   }
 
   buildMenu(snapshot) {
@@ -104,7 +104,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                             style: TextStyle(fontSize: 30))));
               }
               if (snapshot.data != null) {
-                return CustomScrollView(slivers: [buildNavigation(snapshot), buildMenu(snapshot)]);
+                return CustomScrollView(
+                    slivers: [buildNavigation(snapshot), buildMenu(snapshot)]);
               } else {
                 return Center(
                     child: Container(
